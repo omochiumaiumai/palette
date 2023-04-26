@@ -6,6 +6,9 @@ The Colormind API is used to suggest five color schemes.
 
 colormind API(http://colormind.io/api-access/)
 ## install
-`npm install @omochiumaiumai/palette`
+```
+npm install @omochiumaiumai/palette
+```
+  
 ------
 <small>This overview has been translated using DeepL.</small>
