@@ -1,5 +1,5 @@
 {
-  "name": "palette",
+  "name": "@omochiumaiumai/palette",
   "version": "1.0.0",
   "description": "The Colormind API is used to suggest five color schemes.",
   "main": "palette.js",
@@ -12,6 +12,10 @@
     "format": "prettier --write palette.js",
     "lint": "eslint --fix palette.js",
     "fix": "npm run format && npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omochiumaiumai/palette.git"
   },
   "author": "mochi",
   "license": "ISC",
