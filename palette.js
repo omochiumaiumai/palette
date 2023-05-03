@@ -7,7 +7,7 @@ class Palette {
     this.MODEL_URL = 'http://colormind.io/list/';
   }
 
-  async getModel() {
+  async getModels() {
     try {
       const response = await fetch(this.MODEL_URL);
       if (!response.ok) {
@@ -62,12 +62,12 @@ class Palette {
 
 (async () => {
   const palette = new Palette();
-  const modelList = await palette.getModel();
+  const models = await palette.getModels();
 
   const prompt = new Select({
     name: 'model',
     message: 'Choose a model:',
-    choices: modelList,
+    choices: models,
   });
   const model = await prompt.run();
 
