@@ -7,9 +7,9 @@ class Palette {
     this.MODEL_URL = 'http://colormind.io/list/';
   }
 
-  async getModels() {
+  async fetchData(url, request) {
     try {
-      const response = await fetch(this.MODEL_URL);
+      const response = await fetch(url, request);
       if (!response.ok) {
         throw new Error(response.status);
       }
@@ -20,27 +20,25 @@ class Palette {
     }
   }
 
+  async getModels() {
+    const models = await this.fetchData(this.MODEL_URL);
+    return models;
+  }
+
   async getColors(model) {
-    try {
-      const response = await fetch(this.API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ model }),
-      });
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const data = await response.json();
-      return data.result.map((color) => {
-        const [r, g, b] = color;
-        const hex = this.rgbToHex(r, g, b);
-        return { r, g, b, hex };
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    const request = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ model }),
+    };
+    const colors = await this.fetchData(this.API_URL, request);
+    return colors.map((color) => {
+      const [r, g, b] = color;
+      const hex = this.rgbToHex(r, g, b);
+      return { r, g, b, hex };
+    });
   }
 
   output(colors) {
