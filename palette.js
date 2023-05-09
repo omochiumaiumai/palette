@@ -17,6 +17,7 @@ class Palette {
       return data.result;
     } catch (error) {
       console.error(error);
+      throw error;
     }
   }
 
