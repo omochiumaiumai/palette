@@ -61,15 +61,20 @@ class Palette {
 
 (async () => {
   const palette = new Palette();
-  const models = await palette.getModels();
+  try {
+    const models = await palette.getModels();
 
-  const prompt = new Select({
-    name: 'model',
-    message: 'Choose a model:',
-    choices: models,
-  });
-  const model = await prompt.run();
+    const prompt = new Select({
+      name: 'model',
+      message: 'Choose a model:',
+      choices: models,
+    });
+    const model = await prompt.run();
 
-  const colors = await palette.getColors(model);
-  palette.output(colors);
+    const colors = await palette.getColors(model);
+    palette.output(colors);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 })();
