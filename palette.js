@@ -4,21 +4,16 @@ const { Select } = require('enquirer');
 class Palette {
   constructor() {
     this.API_URL = 'http://colormind.io/api/';
-    this.MODEL_URL = 'http://colormind.io/list/';
+    this.MODEL_URL = 'http://colormind.io/lit/';
   }
 
   async fetchData(url, request) {
-    try {
-      const response = await fetch(url, request);
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const data = await response.json();
-      return data.result;
-    } catch (error) {
-      console.error(error);
-      throw error;
+    const response = await fetch(url, request);
+    if (!response.ok) {
+      throw new Error(response.status);
     }
+    const data = await response.json();
+    return data.result;
   }
 
   async getModels() {
