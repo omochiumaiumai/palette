@@ -4,15 +4,18 @@ const { Select } = require('enquirer');
 class Palette {
   constructor() {
     this.API_URL = 'http://colormind.io/api/';
-    this.MODEL_URL = 'http://colormind.io/lit/';
+    this.MODEL_URL = 'http://colormind.io/list/';
   }
 
-  async fetchData(url, request) {
+  async fetchData(url, request, callback) {
     const response = await fetch(url, request);
     if (!response.ok) {
       throw new Error(response.status);
     }
     const data = await response.json();
+    if (callback) {
+      return callback(data.result);
+    }
     return data.result;
   }
 
@@ -29,11 +32,12 @@ class Palette {
       },
       body: JSON.stringify({ model }),
     };
-    const colors = await this.fetchData(this.API_URL, request);
-    return colors.map((color) => {
-      const [r, g, b] = color;
-      const hex = this.rgbToHex(r, g, b);
-      return { r, g, b, hex };
+    return await this.fetchData(this.API_URL, request, (colors) => {
+      return colors.map((color) => {
+        const [r, g, b] = color;
+        const hex = this.rgbToHex(r, g, b);
+        return { r, g, b, hex };
+      });
     });
   }
 
